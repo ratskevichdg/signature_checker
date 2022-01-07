@@ -1,17 +1,16 @@
 import jwt
 import json
 import datetime
-import os
 from fastapi import APIRouter, HTTPException, Request
 from starlette import status
 from typing import Optional
 
 from app.send_pubsub_msg import send_message_to_pub_sub_topic
 from app.slack_messaging import send_error_message
+from app.config import KEY
+
 
 router = APIRouter()
-
-KEY = os.environ['KEY']
 
 @router.post('/server_event/')
 async def get_items(

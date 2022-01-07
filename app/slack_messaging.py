@@ -1,12 +1,9 @@
-import os
 import logging
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-
-SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
-CHANNEL_ID = os.environ['CHANNEL_ID']
+from app.config import SLACK_BOT_TOKEN, CHANNEL_ID
 
 
 client = WebClient(token=SLACK_BOT_TOKEN)
@@ -16,6 +13,7 @@ def send_error_message(app_id, account_id, session_id):
     try:
         result = client.chat_postMessage(
             channel=CHANNEL_ID,
+            text='Mr. Badger is watching your API',
             blocks=[
                 {
                     "type": "divider"
