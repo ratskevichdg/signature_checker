@@ -1,26 +1,31 @@
 # Signature Checker
 #### The program is an API for checking request signatures. If signature is correct, the timestamp will added to the Event from the request and sent to Google Pub/Sub. Otherwise, the API sends an error message to the specified Slack channel.
-## Installation 
+## :hammer: Installation :hammer:
 First fork the repo then do a git clone.
 ```
 git clone https://github.com/<yournamehere>/signature_checker.git
 ```
 You should also have *Docker*, *Slack* workspace with *Bot* connected, and *Google Cloud Platform Project* with *Pub/Sub Topic* connected.
-Create a `.env` file in your root project directory with the folowing text and insert your environmental variables:
+Open a `Dockerfile` and add your environmental variables:
 ```
-KEY="<your_secret_key_for_encrypting>"
-SLACK_BOT_TOKEN="<your_slack_bot_token>"
-CHANNEL_ID="<your_slack_channel_id>"
-GCP_PROJECT_ID="<your_gcp_project_id>"
-GCP_TOPIC_ID="<your_gcp_pub_sub_topic_id>"
-GOOGLE_APPLICATION_CREDENTIALS="/code/<your_gcp_credentials_json_file>.json"
-PATH_TO_EVENT_DATA_FOR_TEST="<path_to_you_event_data_for_test>"
-```
-Open a `Dockerfile` and specify the path to *google applcation credentials json* file
-```
-COPY <path_to_your_gcp_credentials_json_file>/<your_gcp_credentials_json_file>.json /code/<your_gcp_credentials_json_file>.json 
+FROM python:3.9
+ 
+WORKDIR /code
+ 
+COPY ./requirements.txt /code/requirements.txt
+COPY ./app /code/app
+COPY <path_to_your_google_credentials_json/google_credentials.json> /code/<google_credentials.json>
+ 
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=="/code/<your_gcp_credentials_json_file>.json"
+ENV KEY=<your_secret_key>
+ENV SLACK_BOT_TOKEN=<your_slack_bot_token>
+ENV CHANNEL_ID=<your_slack_channel_id>
+ENV GCP_PROJECT_ID=<your_GCP_project_id>
+ENV GCP_TOPIC_ID=<your_GCP_PubSub_topic_id>
+ENV GOOGLE_APPLICATION_CREDENTIALS="/code/<google_credentials.json>
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
 ```
 ### Build the Docker Image
 Now that all the files are in place, let's build the container image.
@@ -34,7 +39,7 @@ docker build -t sign_checker_image .
 ```
 docker run -d --name sign_checker -p 80:80 sign_checker_image
 ```
-## Testing
+## :muscle: Testing :muscle:
 For test you can use the CURL queries provided below to test
 These are queries where the signatures match
 ```
@@ -65,7 +70,6 @@ Response will be the following message:
 ```
 After you can visit Google Cloud Console,choose Pub/Sub and select topic that you specified for sending events.
 ![google pub/sub](https://i.ibb.co/xzk9qNq/pubsub-example.png  "google pub/sub screenshot")
-### :metal::metal::metal::metal::metal::metal::metal::metal::metal::metal:
 What about queries where the signatures do not match? Let's check it out!
 These are queries where the signatures match
 ```
@@ -95,8 +99,23 @@ Just copy and paste these commands to your terminal window. Response will be an 
 ```
 After that, let's go to check our Slack! And we can see the following messages from our Bot:
 ![slack example](https://i.ibb.co/PCZ62hd/slack-example.png "slack example screenshot")
-## Unit Tests
-You need a file with event examples for testing, which path you already specified in the `.env` file.
+## :punch: Unit Tests :punch:
+You need a file with event examples for testing
+ - Create `setenv.sh` file and add it in you root project directory
+ - In `setenv.sh` specify environment variables:
+```
+export KEY=<your_secret_key_for_encrypting>
+export SLACK_BOT_TOKEN=<your_slack_bot_token>
+export CHANNEL_ID=<your_slack_channel_id>
+export GCP_PROJECT_ID=<your_gcp_project_id>
+export GCP_TOPIC_ID=<your_gcp_pub_sub_topic_id>
+export PATH_TO_EVENT_DATA_FOR_TEST="<path_to_you_event_data_for_test>"
+export GOOGLE_APPLICATION_CREDENTIALS="/<path_to_your_gcp_credentials_json_file>/<your_gcp_credentials_json_file.json>
+```
+ - export your environment variables. Go to your project root directory and in terminal window, enter:
+```
+source ./setenv
+```
  - Create and activate virtual environment for this project
  - Install the dependencies from `requirements.txt` file
  - In terminal window, enter:
@@ -105,9 +124,8 @@ pytest
 ```
 When unit testing is finished you will see a report:
 ![pytest report](https://i.ibb.co/7jhRt2g/pytest-report.png "pytest report screenshot")
-### :thumbsup::thumbsup::thumbsup::thumbsup::thumbsup::thumbsup::thumbsup::thumbsup::thumbsup::thumbsup:
-### Everything works.
-## Interactive API docs
+## :mag: Interactive API docs :mag:
 Now you can go to  [http://192.168.99.100/docs](http://192.168.99.100/docs)  or  [http://127.0.0.1/docs](http://127.0.0.1/docs)  (or equivalent, using your Docker host).
 You will see the automatic interactive API documentation (provided by  [Swagger UI](https://github.com/swagger-api/swagger-ui)):
-![swagger ui](https://i.ibb.co/rMHWz3f/swagger-example.png "swagger UI screenshot")​
+![swagger ui](https://i.ibb.co/rMHWz3f/swagger-example.png "swagger UI screenshot")
+### :feelsgood: :feelsgood: :feelsgood: Everything is working :feelsgood: :feelsgood: :feelsgood:

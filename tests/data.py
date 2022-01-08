@@ -3,7 +3,7 @@ import random
 
 import jwt
 
-from app.config import KEY, PATH_TO_EVENT_DATA_FOR_TEST
+from tests.config_test import KEY, PATH_TO_EVENT_DATA_FOR_TEST
 
 
 # uncomment this to set random seed

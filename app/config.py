@@ -1,19 +1,9 @@
 import os
 
-from starlette.config import Config
 
-# extract environment variables from .env file
-dir_path = os.path.dirname(os.path.realpath(__file__))
-root_dir = dir_path[:-3]
-config = Config(f'{root_dir}.env')
-
-KEY = config('KEY', cast=str)
-SLACK_BOT_TOKEN = config('SLACK_BOT_TOKEN', cast=str)
-CHANNEL_ID = config('CHANNEL_ID', cast=str)
-GCP_PROJECT_ID = config('GCP_PROJECT_ID', cast=str)
-GCP_TOPIC_ID = config('GCP_TOPIC_ID', cast=str)
-GOOGLE_APPLICATION_CREDENTIALS = config(
-    'GOOGLE_APPLICATION_CREDENTIALS',
-    cast=str
-)
-PATH_TO_EVENT_DATA_FOR_TEST = config('PATH_TO_EVENT_DATA_FOR_TEST', cast=str)
+KEY = os.environ["KEY"]
+SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
+CHANNEL_ID = os.environ['CHANNEL_ID']
+GCP_PROJECT_ID = os.environ['GCP_PROJECT_ID']
+GCP_TOPIC_ID = os.environ['GCP_TOPIC_ID']
+GOOGLE_APPLICATION_CREDENTIALS = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
