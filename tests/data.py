@@ -4,7 +4,7 @@ import random
 import jwt
 
 from tests.config_test import KEY, PATH_TO_EVENT_DATA_FOR_TEST
-from tests.test_data_combinate import split_list_into_equal_parts
+from tests.combinate_test_data import split_list_into_equal_parts
 
 
 # uncomment this to set random seed

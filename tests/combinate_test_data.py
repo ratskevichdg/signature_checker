@@ -1,4 +1,11 @@
 def split_list_into_equal_parts(lst, sz=8):
+    """
+    Replaces some query parameters to None
+
+    Args:
+        lst (list): list with lists of request body and query parameters
+        sz (int, optional): number of lists to split. Defaults to 8.
+    """
     splited_lists = [lst[i:i+sz] for i in range(0, len(lst), sz)]
     # without query parameters
     for splited_list in splited_lists:
