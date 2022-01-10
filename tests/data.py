@@ -4,6 +4,7 @@ import random
 import jwt
 
 from tests.config_test import KEY, PATH_TO_EVENT_DATA_FOR_TEST
+from tests.test_data_combinate import split_list_into_equal_parts
 
 
 # uncomment this to set random seed
@@ -26,7 +27,7 @@ def get_test_data():
         ]
 
     # randomly sample 100 events
-    jsons_for_test = random.sample(json_list, 100)
+    jsons_for_test = random.sample(json_list, 96)
 
     # extract event_data, app_id, account_id, session_id and signature
     # in one list for every event
@@ -42,12 +43,21 @@ def get_test_data():
         for single_event in jsons_for_test
     ]
 
+    split_list_into_equal_parts(data_for_request_list)
+
     # split the list of events into two lists
-    right_signature_data = data_for_request_list[:int(len(jsons_for_test) / 2)]
-    wrong_signature_data = data_for_request_list[int(len(jsons_for_test) / 2):]
+    right_signature_data = data_for_request_list[:int(len(jsons_for_test) / 3)]
+    wrong_signature_data = data_for_request_list[int(len(jsons_for_test) / 3):]
+    without_signature_data = data_for_request_list[
+        2 * (int(len(jsons_for_test) / 3)):
+    ]
 
     # messing up the signatures in the list
     for i in wrong_signature_data:
-        i[4] = i[4].swapcase()
+        i[4] = i[4].swapcase() if i[4] else None
+    # map(lambda i: i[4].swapcase(), wrong_signature_data)
 
-    return (right_signature_data, wrong_signature_data)
+    for i in without_signature_data:
+        i[4] = None
+
+    return (right_signature_data, wrong_signature_data, without_signature_data)

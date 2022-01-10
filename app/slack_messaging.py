@@ -20,8 +20,12 @@ def send_error_message(app_id, account_id, session_id):
         session_id (str): session ID.
     """
 
+    if session_id in ['', 'None', None]:
+        session_id = 'undefined'
+
     header_text = (
-        f"Event {session_id} has not been downloaded "
+        f"Event {session_id} "
+        "has not been uploaded "
         "because the signatures did not match :ghost: :ghost: :ghost:"
     )
     section_text = (
