@@ -49,15 +49,14 @@ def get_test_data():
     right_signature_data = data_for_request_list[:int(len(jsons_for_test) / 3)]
     wrong_signature_data = data_for_request_list[int(len(jsons_for_test) / 3):]
     without_signature_data = data_for_request_list[
-        2 * (int(len(jsons_for_test) / 3)):
-    ]
+                             2 * (int(len(jsons_for_test) / 3)):
+                             ]
 
     # messing up the signatures in the list
     for i in wrong_signature_data:
         i[4] = i[4].swapcase() if i[4] else None
-    # map(lambda i: i[4].swapcase(), wrong_signature_data)
 
     for i in without_signature_data:
         i[4] = None
 
-    return (right_signature_data, wrong_signature_data, without_signature_data)
+    return right_signature_data, wrong_signature_data, without_signature_data

@@ -1,6 +1,7 @@
 import jwt
 import json
 import datetime
+from memory_profiler import profile
 from fastapi import APIRouter, HTTPException, Request
 from starlette import status
 from typing import Optional
@@ -10,18 +11,18 @@ from app.slack_messaging import send_error_message
 from app.utilities import find_query_parameter
 from app.config import KEY
 
-
 router = APIRouter()
 
 
+@profile
 @router.post("/server_event/")
 async def get_items(
-    *,
-    appId: Optional[str] = None,
-    accountId: Optional[str] = None,
-    sessionId: Optional[str] = None,
-    signature: Optional[str] = None,
-    event: Request
+        *,
+        appId: Optional[str] = None,
+        accountId: Optional[str] = None,
+        sessionId: Optional[str] = None,
+        signature: Optional[str] = None,
+        event: Request
 ):
     """
     Processes the received request with the event.

@@ -1,8 +1,10 @@
+from memory_profiler import profile
 from google.cloud import pubsub_v1
 
 from app.config import GCP_PROJECT_ID, GCP_TOPIC_ID
 
 
+@profile
 def send_message_to_pub_sub_topic(message):
     """
     Send message to Google Cloud Pub/Sub topic.

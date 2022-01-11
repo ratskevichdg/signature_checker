@@ -1,3 +1,6 @@
+from memory_profiler import profile
+
+@profile
 def find_query_parameter(query_parameter, request_body, parameter_name):
     """
     Find a query parameter value from request body if no exists in query.
