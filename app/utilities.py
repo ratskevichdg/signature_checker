@@ -1,5 +1,8 @@
 from memory_profiler import profile
 
+from logger import logger
+
+
 @profile
 def find_query_parameter(query_parameter, request_body, parameter_name):
     """
@@ -14,5 +17,6 @@ def find_query_parameter(query_parameter, request_body, parameter_name):
         [str]: Query parameter from Request body
     """
     if query_parameter is None:
+        logger.warning(f"Request without query parameter {query_parameter}")
         return str(request_body[parameter_name])
     return query_parameter
