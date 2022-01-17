@@ -1,8 +1,19 @@
 from memory_profiler import profile
 import uvicorn
 from fastapi import FastAPI
+from loguru import logger
 
 from app.handlers import router
+
+
+# Set up logger
+logger.add(
+    "logs/api_logs.log",
+    format="{time} :: {level} :: {message}",
+    level="ERROR",
+    rotation="1 MB",
+    compression="zip"
+)
 
 app = FastAPI()
 

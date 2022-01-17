@@ -5,12 +5,12 @@ from memory_profiler import profile
 from fastapi import APIRouter, HTTPException, Request, Response
 from starlette import status
 from typing import Optional
+from loguru import logger
 
 from app.send_pubsub_msg import send_message_to_pub_sub_topic
 from app.slack_messaging import send_error_message
-from app.utilities import find_query_parameter
+# from app.utilities import find_query_parameter
 from app.config import KEY
-from logger import logger
 
 router = APIRouter()
 
@@ -46,9 +46,9 @@ async def get_items(
     # get the request body
     try:
         request_body = await event.json()
-        appId = find_query_parameter(appId, request_body, 'appName')
-        accountId = find_query_parameter(accountId, request_body, 'appUserId')
-        sessionId = find_query_parameter(sessionId, request_body, 'sessionId')
+        # appId = find_query_parameter(appId, request_body, 'appName')
+        # accountId = find_query_parameter(accountId, request_body, 'appUserId')
+        # sessionId = find_query_parameter(sessionId, request_body, 'sessionId')
 
         # encode request body to get signature
         encoded_signature = jwt.encode(

@@ -1,7 +1,7 @@
 from memory_profiler import profile
 from google.cloud import pubsub_v1
+from loguru import logger
 
-from logger import logger
 from app.config import GCP_PROJECT_ID, GCP_TOPIC_ID
 
 

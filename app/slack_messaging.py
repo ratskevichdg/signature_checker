@@ -2,8 +2,8 @@ from memory_profiler import profile
 
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+from loguru import logger
 
-from logger import logger
 from app.config import SLACK_BOT_TOKEN, CHANNEL_ID
 
 client = WebClient(token=SLACK_BOT_TOKEN)
