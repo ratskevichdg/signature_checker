@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
  
 WORKDIR /code
  
@@ -8,6 +8,8 @@ COPY <path_to_your_google_credentials_json/google_credentials.json> /code/<googl
  
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
+ENV PYTHONPATH=$PWD
+ENV PYTHONUNBUFFERED=1
 ENV KEY=<your_secret_key>
 ENV SLACK_BOT_TOKEN=<your_slack_bot_token>
 ENV CHANNEL_ID=<your_slack_channel_id>
