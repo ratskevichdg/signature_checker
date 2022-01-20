@@ -299,3 +299,5 @@ cython_debug/
 
 # Support for Project snippet scope
 !.vscode/*.code-snippets
+
+eng-digit-335709-1e21ef0f38ba.json
