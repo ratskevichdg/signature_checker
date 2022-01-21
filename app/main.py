@@ -5,7 +5,6 @@ from loguru import logger
 
 from app.handlers import router
 
-
 # Set up logger
 logger.add(
     "logs/api_logs.log",
