@@ -7,10 +7,8 @@ from parameterized import parameterized
 from app.main import app as web_app
 from .data import get_test_data
 
-
 # get the test datasets
-right_signature_data_list, wrong_signature_data_list,\
-    without_signature_data = get_test_data()
+right_signature_data_list, wrong_signature_data_list, without_signature_data = get_test_data()
 
 
 class APITestCase(TestCase):
@@ -31,7 +29,7 @@ class APITestCase(TestCase):
     @mark.post_right_signature
     @parameterized.expand(right_signature_data_list)
     def test_posts_with_right_signatures(
-        self, json_data, app_id, account_id, session_id, signature
+            self, json_data, app_id, account_id, session_id, signature
     ) -> None:
         """
         Test POST request with the correct signature.
@@ -67,7 +65,7 @@ class APITestCase(TestCase):
     @mark.post_wrong_signature
     @parameterized.expand(wrong_signature_data_list)
     def test_posts_with_wrong_signatures(
-        self, json_data, app_id, account_id, session_id, signature
+            self, json_data, app_id, account_id, session_id, signature
     ) -> None:
         """
         Test POST request with the incorrect signature.
@@ -103,7 +101,7 @@ class APITestCase(TestCase):
     @mark.post_without_signature
     @parameterized.expand(without_signature_data)
     def test_posts_without_signatures(
-        self, json_data, app_id, account_id, session_id, signature
+            self, json_data, app_id, account_id, session_id, signature
     ) -> None:
         """
         Test POST request without signature.

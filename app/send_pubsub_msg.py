@@ -1,8 +1,11 @@
+from memory_profiler import profile
 from google.cloud import pubsub_v1
+from loguru import logger
 
 from app.config import GCP_PROJECT_ID, GCP_TOPIC_ID
 
 
+@profile
 def send_message_to_pub_sub_topic(message):
     """
     Send message to Google Cloud Pub/Sub topic.
@@ -17,4 +20,5 @@ def send_message_to_pub_sub_topic(message):
     # Data must be a bytestring
     data = data.encode("utf-8")
     # Add two attributes, origin and username, to the message
-    publisher.publish(topic_path, data, origin="python-sample", username="gcp")
+    future = publisher.publish(topic_path, data, origin="python-sample", username="gcp")
+    logger.info(f"Published message to Pub/Sub {future.result()}")
