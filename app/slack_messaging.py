@@ -1,5 +1,3 @@
-from memory_profiler import profile
-
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from loguru import logger
@@ -9,7 +7,6 @@ from app.config import SLACK_BOT_TOKEN, CHANNEL_ID
 client = WebClient(token=SLACK_BOT_TOKEN)
 
 
-@profile
 def send_error_message(app_id_deque, account_id_deque, session_id_deque):
     """
     Send error messages in batch of 20 to Slack chanel via bot.

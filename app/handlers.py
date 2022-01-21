@@ -3,7 +3,6 @@ from collections import deque
 import jwt
 import json
 import datetime
-from memory_profiler import profile
 from fastapi import APIRouter, HTTPException, Request, Response, Query
 from starlette import status
 from typing import Optional
@@ -21,7 +20,6 @@ bad_signature_account_id_deque = deque()
 bad_signature_session_id_deque = deque()
 
 
-@profile
 @logger.catch
 @router.post("/server_event/")
 async def get_items(

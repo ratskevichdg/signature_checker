@@ -1,4 +1,3 @@
-from memory_profiler import profile
 import uvicorn
 from fastapi import FastAPI
 from loguru import logger
@@ -17,7 +16,6 @@ logger.add(
 app = FastAPI()
 
 
-@profile
 def get_application() -> FastAPI:
     """
     Run API.
