@@ -7,7 +7,6 @@ from app.config import GCP_PROJECT_ID, GCP_TOPIC_ID
 def send_message_to_pub_sub_topic(message):
     """
     Send message to Google Cloud Pub/Sub topic.
-
     Args:
         message (str): message for Google Cloud Pub/Sub topic.
     """

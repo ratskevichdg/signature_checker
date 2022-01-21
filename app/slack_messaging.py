@@ -7,28 +7,24 @@ from app.config import SLACK_BOT_TOKEN, CHANNEL_ID
 client = WebClient(token=SLACK_BOT_TOKEN)
 
 
-def send_error_message(app_id, account_id, session_id):
+def send_error_message(app_id_deque, account_id_deque, session_id_deque):
     """
-    Send error message to Slack chanel via bot.
-
+    Send error messages in batch of 20 to Slack chanel via bot.
     Args:
-        app_id (str): application ID.
-        account_id (str): account ID.
-        session_id (str): session ID.
+        app_id_deque (deque): deque of application IDs.
+        account_id_deque (deque): deque of account IDs.
+        session_id_deque (deque): deque of session IDs.
     """
-
-    if session_id in ['', 'None', None]:
-        session_id = 'undefined'
 
     header_text = (
-        f"Event {session_id} "
-        "has not been uploaded "
+        "Events "
+        "have not been uploaded "
         "because the signatures did not match :ghost: :ghost: :ghost:"
     )
     section_text = (
-        f"Session ID:\t{session_id}\n"
-        f"Account ID:\t{account_id}\n"
-        f"Application ID:\t{app_id}"
+        f":poop: Events ID:\t{', '.join(session_id_deque)}\n"
+        f":poop: Accounts ID:\t{', '.join(account_id_deque)}\n"
+        f":poop: Application ID:\t{', '.join(app_id_deque)}"
     )
 
     try:

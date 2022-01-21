@@ -19,7 +19,6 @@ app = FastAPI()
 def get_application() -> FastAPI:
     """
     Run API.
-
     Returns:
         FastAPI: API.
     """
